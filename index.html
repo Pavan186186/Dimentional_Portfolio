@@ -1,18 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pavan Teja Tallapalli | Dimensional Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dimensional Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
-    <div id="ui-layer">
-        <h1 id="title">Pavan Teja Tallapalli</h1>
-        <p id="subtitle">Data Scientist & Software Engineer</p>
-    </div>
-    <div class="instruction" id="instruction">Click and drag right to expand to 1D</div>
-    <div id="canvas-container"></div>
+  <div id="canvas-container"></div>
 
-    <script type="module" src="/src/main.js"></script>
+  <!-- HUD Layer -->
+  <div id="hud">
+
+    <!-- Top-left: Dimension info -->
+    <div id="dim-info">
+      <div id="dim-number">0</div>
+      <div id="dim-label">DIMENSION</div>
+      <div id="dim-name">Point</div>
+    </div>
+
+    <!-- Top-right: Math + Topology -->
+    <div id="math-panel">
+      <div id="math-formula"></div>
+      <div id="topo-stats">
+        <span class="stat"><span class="stat-val" id="s-v">1</span><span class="stat-key">V</span></span>
+        <span class="stat"><span class="stat-val" id="s-e">0</span><span class="stat-key">E</span></span>
+        <span class="stat"><span class="stat-val" id="s-f">0</span><span class="stat-key">F</span></span>
+        <span class="stat"><span class="stat-val" id="s-c">0</span><span class="stat-key">C</span></span>
+      </div>
+    </div>
+
+    <!-- Center: Portfolio content (hidden until dim > 0) -->
+    <div id="content-panel">
+      <div id="content-tag">—</div>
+      <div id="content-title"></div>
+      <div id="content-body"></div>
+    </div>
+
+    <!-- Bottom center: Drag instruction -->
+    <div id="instruction-wrap">
+      <div id="instruction-line"></div>
+      <div id="instruction-text">drag to unfold the first dimension</div>
+    </div>
+
+    <!-- Bottom: Nav dots -->
+    <div id="nav-dots">
+      <button class="ndot active" data-d="0" aria-label="0D Point"></button>
+      <button class="ndot" data-d="1" aria-label="1D Line"></button>
+      <button class="ndot" data-d="2" aria-label="2D Square"></button>
+      <button class="ndot" data-d="3" aria-label="3D Cube"></button>
+      <button class="ndot" data-d="4" aria-label="4D Tesseract"></button>
+    </div>
+
+    <!-- Scanlines overlay -->
+    <div id="scanlines"></div>
+
+    <!-- Corner frames -->
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
