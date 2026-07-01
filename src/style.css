@@ -224,3 +224,22 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ─── Anchored geometry labels ──────────────────────────────────── */
+#content-panel { display: none; } /* data is in geometry now */
+
+/* Pull progress indicator */
+#pull-hint-bar {
+  position: fixed; bottom: 100px; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 2px;
+  background: rgba(57,255,138,0.15);
+  border-radius: 2px; pointer-events: none;
+  z-index: 20; opacity: 0;
+}
+#pull-hint-fill {
+  height: 100%; background: #39ff8a;
+  border-radius: 2px; width: 0%;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 8px #39ff8a;
+}
