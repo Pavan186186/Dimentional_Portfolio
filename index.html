@@ -1376,8 +1376,10 @@ function setDim(d, force, src){
   DIM = d;
   beep(280 + d*80, 460 + d*110, .13, .1);
   if(src === 'nav'){
-    if(d === 0){ closePanel('left'); closePanel('right'); }
-    else if(AUTO_OPEN[d]) openSection(AUTO_OPEN[d], true);
+    const want = AUTO_OPEN[d]; // this dimension's own panel (undefined at 0D)
+    if(openSections.left  && openSections.left  !== want) closePanel('left');
+    if(openSections.right && openSections.right !== want) closePanel('right');
+    if(want) openSection(want, true);
   }
   $('#dim-num').innerHTML = `${d}<sup>D</sup>`;
   $('#dim-label').textContent = DNAMES[d];
@@ -1393,17 +1395,21 @@ function setDim(d, force, src){
 }
 
 /* scroll / touch / keys / dots */
-let lastStep = 0;
+let lastStep = 0, wheelAcc = 0;
 function tryStep(dir){
   const now = performance.now();
-  if(now - lastStep < 90) return;
+  if(now - lastStep < 600) return;      // cooldown: max one dimension per 0.6s
   lastStep = now;
   setDim(DIM + dir, false, 'nav');
 }
 addEventListener('wheel', e=>{
   if(e.target.closest('.panel, #chat, #reader')) return; // native scroll inside
-  if(Math.abs(e.deltaY) < 4) return;
-  tryStep(e.deltaY > 0 ? 1 : -1);
+  if(performance.now() - lastStep < 600){ wheelAcc = 0; return; } // eat trackpad momentum after a step
+  wheelAcc += e.deltaY;
+  if(Math.abs(wheelAcc) > 140){          // require a deliberate scroll, not a twitch
+    tryStep(wheelAcc > 0 ? 1 : -1);
+    wheelAcc = 0;
+  }
 }, {passive:true});
 
 let tY=null;
